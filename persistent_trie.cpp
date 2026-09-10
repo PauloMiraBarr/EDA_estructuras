@@ -25,8 +25,10 @@ struct PersistentTrie {
             root->count = last ? last->count + 1 : 1;
             int myself = match(number, i);
             int sibling = myself ^ 1;
+            
             root->child[myself] = new TrieNode();
             root->child[sibling] = last ? last->child[sibling] : nullptr;
+            
             last = last ? last->child[myself] : nullptr;
             root = root->child[myself];
         }
@@ -46,9 +48,6 @@ struct PersistentTrie {
             int myself = match(number, i);
             int sibling = myself ^ 1;
 
-            printf("[%3d] ", i);
-            cout << myself << " -> " << root->count << "\n";
-
             root->child[sibling] = last->child[sibling];
 
             if (last->child[myself]->count > 1) {
@@ -62,7 +61,6 @@ struct PersistentTrie {
             return;
         }
         root->count = last->count - 1;
-        cout << "[  0] " << match(number, 0) << " -> " << root->count << "\n";
     }
 
     void rem(int number) {
